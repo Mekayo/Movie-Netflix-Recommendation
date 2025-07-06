@@ -311,7 +311,7 @@ class ContentBasedRecommender:
         print("✅ Model initialized successfully!")
 
 # Initialize the recommender
-recommender = ContentBasedRecommender(r"C:\Users\monst\Desktop\project\Movie-Netflix-Recommendation\data\netflix_titles_cleaned.csv")
+recommender = ContentBasedRecommender(r"C:\Users\monst\Desktop\Movie-Netflix-Recommendation\data\netflix_titles_cleaned.csv")
 
 # Function to get recommendations (for backward compatibility)
 def recommend_content_based(title, top_n=5):
