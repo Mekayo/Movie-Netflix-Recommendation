@@ -33,7 +33,7 @@ class ContentBasedRecommender:
         Args:
             data_path (str): Path to the cleaned Netflix dataset
         """
-        self.df = pd.read_csv(data_path)
+        self.df = pd.read_csv(r"C:\Users\monst\Desktop\Movie-Netflix-Recommendation\data\netflix_titles_cleaned.csv")
         self.tfidf_matrix = None
         self.cosine_sim = None
         self.indices = None
