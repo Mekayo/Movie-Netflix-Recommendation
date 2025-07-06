@@ -15,15 +15,24 @@ warnings.filterwarnings('ignore')
 try:
     nltk.data.find('tokenizers/punkt')
 except LookupError:
-    nltk.download('punkt')
+    try:
+        nltk.download('punkt', quiet=True)
+    except Exception as e:
+        print(f"Warning: Could not download punkt: {e}")
 try:
     nltk.data.find('corpora/stopwords')
 except LookupError:
-    nltk.download('stopwords')
+    try:
+        nltk.download('stopwords', quiet=True)
+    except Exception as e:
+        print(f"Warning: Could not download stopwords: {e}")
 try:
     nltk.data.find('corpora/wordnet')
 except LookupError:
-    nltk.download('wordnet')
+    try:
+        nltk.download('wordnet', quiet=True)
+    except Exception as e:
+        print(f"Warning: Could not download wordnet: {e}")
 
 class ContentBasedRecommender:
     def __init__(self, data_path):
@@ -33,7 +42,12 @@ class ContentBasedRecommender:
         Args:
             data_path (str): Path to the cleaned Netflix dataset
         """
-        self.df = pd.read_csv(r"C:\Users\monst\Desktop\Movie-Netflix-Recommendation\data\netflix_titles_cleaned.csv")
+        try:
+            self.df = pd.read_csv(data_path)
+        except FileNotFoundError:
+            raise FileNotFoundError(f"Data file not found: {data_path}")
+        except Exception as e:
+            raise Exception(f"Error loading data: {e}")
         self.tfidf_matrix = None
         self.cosine_sim = None
         self.indices = None
@@ -311,7 +325,7 @@ class ContentBasedRecommender:
         print("✅ Model initialized successfully!")
 
 # Initialize the recommender
-recommender = ContentBasedRecommender(r"C:\Users\monst\Desktop\Movie-Netflix-Recommendation\data\netflix_titles_cleaned.csv")
+recommender = ContentBasedRecommender("data/netflix_titles_cleaned.csv")
 
 # Function to get recommendations (for backward compatibility)
 def recommend_content_based(title, top_n=5):
@@ -324,7 +338,7 @@ def recommend_content_based(title, top_n=5):
     recommendations = recommender.recommend_content_based(title, top_n)
     
     # Convert to old format for compatibility
-    if 'error' in recommendations[0]:
+    if recommendations and 'error' in recommendations[0]:
         return [recommendations[0]['error']]
     
     results = []
@@ -342,7 +356,7 @@ def recommend_content_based(title, top_n=5):
     
     return results
 
-def evaluate_dl_model(y_true, y_pred):
+def evaluate_model(y_true, y_pred):
     """
     Evaluate model performance
     """

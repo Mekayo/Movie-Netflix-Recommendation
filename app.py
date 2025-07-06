@@ -1,22 +1,40 @@
 # app.py
 import streamlit as st
-from reco_part import ContentBasedRecommender, recommend_content_based
 import pandas as pd
 import time
+import os
+
+# Try to import the recommendation module with error handling
+try:
+    from reco_part import ContentBasedRecommender, recommend_content_based
+except ImportError as e:
+    st.error(f"Error importing recommendation module: {e}")
+    st.stop()
 
 # Load the dataset to get movie titles
-df = pd.read_csv(r"C:\Users\monst\Desktop\Movie-Netflix-Recommendation\data\netflix_titles_cleaned.csv")
-movie_list = df['title'].dropna().unique().tolist()
-movie_list.sort()
+try:
+    df = pd.read_csv("data/netflix_titles_cleaned.csv")
+    movie_list = df['title'].dropna().unique().tolist()
+    movie_list.sort()
+except FileNotFoundError:
+    st.error("❌ Data file not found. Please ensure 'data/netflix_titles_cleaned.csv' exists.")
+    st.stop()
+except Exception as e:
+    st.error(f"❌ Error loading data: {e}")
+    st.stop()
 
 # Initialize the recommender (lazy loading)
 @st.cache_resource
 def get_recommender():
     """Initialize and cache the recommender"""
-    recommender = ContentBasedRecommender(r"C:\Users\monst\Desktop\Movie-Netflix-Recommendation\data\netflix_titles_cleaned.csv")
-    with st.spinner("🚀 Initializing recommendation model..."):
-        recommender.initialize_model()
-    return recommender
+    try:
+        recommender = ContentBasedRecommender("data/netflix_titles_cleaned.csv")
+        with st.spinner("🚀 Initializing recommendation model..."):
+            recommender.initialize_model()
+        return recommender
+    except Exception as e:
+        st.error(f"❌ Error initializing recommender: {e}")
+        return None
 
 # --- Page Config ---
 st.set_page_config(
