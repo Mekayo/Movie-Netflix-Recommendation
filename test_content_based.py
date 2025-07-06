@@ -44,7 +44,7 @@ def test_enhanced_features():
     print("=" * 60)
     
     # Initialize the enhanced recommender
-    recommender = ContentBasedRecommender(r"C:\Users\monst\Desktop\project\Movie-Netflix-Recommendation\data\netflix_titles_cleaned.csv")
+    recommender = ContentBasedRecommender(r"C:\Users\monst\Desktop\Movie-Netflix-Recommendation\data\netflix_titles_cleaned.csv")
     recommender.initialize_model()
     
     # Test movie information retrieval
@@ -104,7 +104,7 @@ def test_performance():
     print("⚡ PERFORMANCE TESTING")
     print("=" * 60)
     
-    recommender = ContentBasedRecommender(r"C:\Users\monst\Desktop\project\Movie-Netflix-Recommendation\data\netflix_titles_cleaned.csv")
+    recommender = ContentBasedRecommender(r"C:\Users\monst\Desktop\Movie-Netflix-Recommendation\data\netflix_titles_cleaned.csv")
     
     # Time the initialization
     print("🔄 Timing model initialization...")
@@ -134,7 +134,7 @@ def test_similarity_analysis():
     print("🔍 SIMILARITY ANALYSIS")
     print("=" * 60)
     
-    recommender = ContentBasedRecommender(r"C:\Users\monst\Desktop\project\Movie-Netflix-Recommendation\data\netflix_titles_cleaned.csv")
+    recommender = ContentBasedRecommender(r"C:\Users\monst\Desktop\Movie-Netflix-Recommendation\data\netflix_titles_cleaned.csv")
     recommender.initialize_model()
     
     # Test different similarity thresholds

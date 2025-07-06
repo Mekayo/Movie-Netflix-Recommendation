@@ -5,7 +5,7 @@ import pandas as pd
 import time
 
 # Load the dataset to get movie titles
-df = pd.read_csv(r"C:\Users\monst\Desktop\project\Movie-Netflix-Recommendation\data\netflix_titles_cleaned.csv")
+df = pd.read_csv(r"C:\Users\monst\Desktop\Movie-Netflix-Recommendation\data\netflix_titles_cleaned.csv")
 movie_list = df['title'].dropna().unique().tolist()
 movie_list.sort()
 
@@ -13,7 +13,7 @@ movie_list.sort()
 @st.cache_resource
 def get_recommender():
     """Initialize and cache the recommender"""
-    recommender = ContentBasedRecommender(r"C:\Users\monst\Desktop\project\Movie-Netflix-Recommendation\data\netflix_titles_cleaned.csv")
+    recommender = ContentBasedRecommender(r"C:\Users\monst\Desktop\Movie-Netflix-Recommendation\data\netflix_titles_cleaned.csv")
     with st.spinner("🚀 Initializing recommendation model..."):
         recommender.initialize_model()
     return recommender
